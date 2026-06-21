@@ -136,7 +136,7 @@ abstract class L10n {
   /// No description provided for @city.
   ///
   /// In en, this message translates to:
-  /// **'MOSCOW'**
+  /// **'Saint-Petersburg'**
   String get city;
 
   /// No description provided for @aboutTitle.

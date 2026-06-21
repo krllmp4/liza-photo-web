@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:liza_photo_web/src/core/localization/localization_extension.dart';
 import 'package:liza_photo_web/src/core/shared_widgets/site_header.dart';
 import 'package:liza_photo_web/src/features/gallery/presentation/gallery_scope.dart';
@@ -26,10 +25,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _openPhotoViewer(PhotoViewerPage page) {
+    Navigator.of(context).push(
+      PageRouteBuilder<void>(
+        transitionDuration: const Duration(milliseconds: 260),
+        reverseTransitionDuration: const Duration(milliseconds: 220),
+        pageBuilder: (_, _, _) => page,
+        transitionsBuilder: (_, animation, _, child) => FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Curves.decelerate,
+            reverseCurve: Curves.decelerate,
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = GalleryScope.viewModelOf(context);
     final screenWidth = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -89,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     child: PhotoGrid(
                       photos: viewModel.photos,
-                      onPhotoTap: (index) => _open(
+                      onPhotoTap: (index) => _openPhotoViewer(
                         PhotoViewerPage(
                           photos: viewModel.photos,
                           initialIndex: index,
@@ -106,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('© 2026 LIZA'),
+                    const Text('© 2026 Elizaveta Antonova'),
                     Text(context.l10n.city),
                   ],
                 ),

@@ -10,7 +10,12 @@ final class GalleryService {
   final String manifestUrl;
 
   Future<List<Map<String, Object?>>> fetchManifest() async {
-    final response = await _dio.get<Map<String, Object?>>(manifestUrl);
+    final response = await _dio.get<Map<String, Object?>>(
+      manifestUrl,
+      queryParameters: {
+        'v': DateTime.now().millisecondsSinceEpoch,
+      },
+    );
     final data = response.data;
     if (data == null) {
       throw const FormatException('Gallery manifest must be a JSON object');

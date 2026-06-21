@@ -27,7 +27,7 @@ class L10nRu extends L10n {
   String get retryLoadingPhotos => 'ПОВТОРИТЬ ЗАГРУЗКУ';
 
   @override
-  String get city => 'МОСКВА';
+  String get city => 'Санкт-Петербург';
 
   @override
   String get aboutTitle => 'СНИМАЮ ЛЮДЕЙ\nТАКИМИ, КАКИЕ ОНИ ЕСТЬ.';

@@ -54,20 +54,24 @@ class _PhotoViewerPageState extends State<PhotoViewerPage> {
               onPageChanged: (index) => setState(() => _index = index),
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.fromLTRB(52, 62, 52, 72),
-                child: CachedNetworkImage(
-                  imageUrl: widget.photos[index].fullUrl,
-                  fit: BoxFit.contain,
-                  fadeInDuration: const Duration(milliseconds: 300),
-                  placeholder: (_, _) => const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 1,
+                child: Hero(
+                  tag: widget.photos[index].fullUrl,
+                  transitionOnUserGestures: true,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.photos[index].fullUrl,
+                    fit: BoxFit.contain,
+                    fadeInDuration: const Duration(milliseconds: 300),
+                    placeholder: (_, _) => const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 1,
+                      ),
                     ),
-                  ),
-                  errorWidget: (_, _, _) => const Center(
-                    child: Icon(
-                      Icons.broken_image_outlined,
-                      color: Colors.white54,
+                    errorWidget: (_, _, _) => const Center(
+                      child: Icon(
+                        Icons.broken_image_outlined,
+                        color: Colors.white54,
+                      ),
                     ),
                   ),
                 ),

@@ -74,22 +74,26 @@ class _PhotoTileState extends State<_PhotoTile> {
         child: ClipRect(
           child: Stack(
             children: [
-              AnimatedScale(
-                scale: _hovered ? 1.018 : 1,
-                duration: const Duration(milliseconds: 350),
-                curve: Curves.easeOut,
-                child: CachedNetworkImage(
-                  imageUrl: widget.photo.thumbnailUrl,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                  fadeInDuration: const Duration(milliseconds: 450),
-                  placeholder: (_, _) => const AspectRatio(
-                    aspectRatio: 3 / 4,
-                    child: _PhotoPlaceholder(),
-                  ),
-                  errorWidget: (_, _, _) => const AspectRatio(
-                    aspectRatio: 3 / 4,
-                    child: _PhotoPlaceholder(),
+              Hero(
+                tag: widget.photo.fullUrl,
+                transitionOnUserGestures: true,
+                child: AnimatedScale(
+                  scale: _hovered ? 1.018 : 1,
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeOut,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.photo.thumbnailUrl,
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                    fadeInDuration: const Duration(milliseconds: 450),
+                    placeholder: (_, _) => const AspectRatio(
+                      aspectRatio: 3 / 4,
+                      child: _PhotoPlaceholder(),
+                    ),
+                    errorWidget: (_, _, _) => const AspectRatio(
+                      aspectRatio: 3 / 4,
+                      child: _PhotoPlaceholder(),
+                    ),
                   ),
                 ),
               ),

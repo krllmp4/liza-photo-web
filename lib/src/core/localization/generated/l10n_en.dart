@@ -27,7 +27,7 @@ class L10nEn extends L10n {
   String get retryLoadingPhotos => 'RETRY LOADING PHOTOS';
 
   @override
-  String get city => 'MOSCOW';
+  String get city => 'Saint-Petersburg';
 
   @override
   String get aboutTitle => 'I PHOTOGRAPH\nPEOPLE AS THEY ARE.';
