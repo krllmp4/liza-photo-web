@@ -25,7 +25,9 @@ fvm flutter pub get
 fvm flutter run -d chrome
 ```
 
-Without configuration the app shows demo Unsplash images. To connect a public JSON manifest (for example, in Supabase Storage):
+`GalleryRepositoryModule` currently selects `MockGalleryRepository`, which returns demo Unsplash images. `GalleryRepository` is the production implementation for a public JSON manifest (for example, in Supabase Storage).
+
+After switching the DI module to `GalleryRepository`, pass the manifest URL when running the app:
 
 ```sh
 fvm flutter run -d chrome \
@@ -42,20 +44,19 @@ fvm flutter build web --release \
 ## Manifest
 
 ```json
-[
-  {
-    "id": "portrait-01",
-    "thumbnail": "thumbnails/portrait-01.webp",
-    "full": "full/portrait-01.webp",
-    "width": 1600,
-    "height": 2400,
-    "title": "Portrait I",
-    "category": "Portraits"
-  }
-]
+{
+  "photos": [
+    {
+      "thumbnail": "https://storage.example.com/thumbnails/portrait-01.webp",
+      "full": "https://storage.example.com/full/portrait-01.webp",
+      "title": "Portrait I",
+      "category": "Portraits"
+    }
+  ]
+}
 ```
 
-Relative image paths are resolved against the manifest URL.
+Image URLs in the manifest must be absolute.
 
 The storage endpoint must allow browser requests from the site's domain (CORS). Upload optimized thumbnails and full-size web images rather than camera originals.
 

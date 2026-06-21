@@ -1,21 +1,37 @@
 import 'package:dio/dio.dart';
 
 final class GalleryService {
-  const GalleryService({required Dio dio, required this.manifestUrl})
-    : _dio = dio;
+  const GalleryService({
+    required Dio dio,
+    required this.manifestUrl,
+  }) : _dio = dio;
 
   final Dio _dio;
   final String manifestUrl;
 
-  Future<List<Map<String, dynamic>>> fetchManifest() async {
-    final response = await _dio.get<dynamic>(manifestUrl);
+  Future<List<Map<String, Object?>>> fetchManifest() async {
+    final response = await _dio.get<Map<String, Object?>>(manifestUrl);
     final data = response.data;
-    if (data is! List) {
-      throw const FormatException('Gallery manifest must be a JSON array');
+    if (data == null) {
+      throw const FormatException('Gallery manifest must be a JSON object');
     }
 
-    return data
-        .map((item) => Map<String, dynamic>.from(item as Map))
+    final photos = data['photos'];
+    if (photos is! List<Object?>) {
+      throw const FormatException(
+        'Gallery manifest must contain a photos array',
+      );
+    }
+
+    return photos
+        .map((photo) {
+          if (photo is! Map<String, Object?>) {
+            throw const FormatException(
+              'Every item in photos must be a JSON object',
+            );
+          }
+          return photo;
+        })
         .toList(growable: false);
   }
 }

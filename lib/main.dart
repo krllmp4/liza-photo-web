@@ -1,36 +1,52 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'package:liza_photo_web/core/config/app_config.dart';
-import 'package:liza_photo_web/core/theme/app_theme.dart';
-import 'package:liza_photo_web/src/features/gallery/data/data_source/gallery_service.dart';
-import 'package:liza_photo_web/src/features/gallery/data/repository/gallery_repository.dart';
+import 'package:liza_photo_web/src/core/localization/app_locale_controller.dart';
+import 'package:liza_photo_web/src/core/localization/app_locale_scope.dart';
+import 'package:liza_photo_web/src/core/localization/generated/l10n.dart';
+import 'package:liza_photo_web/src/core/localization/localization_extension.dart';
+import 'package:liza_photo_web/src/core/theme/app_theme.dart';
+import 'package:liza_photo_web/src/features/gallery/presentation/gallery_scope.dart';
 import 'package:liza_photo_web/src/features/gallery/presentation/home_page.dart';
-import 'package:liza_photo_web/src/features/gallery/presentation/view_model/gallery_view_model.dart';
 
 void main() {
-  final service = GalleryService(
-    dio: Dio(BaseOptions(connectTimeout: const Duration(seconds: 8))),
-    manifestUrl: AppConfig.galleryManifestUrl,
-  );
-  final viewModel = GalleryViewModel(
-    repository: GalleryRepository(galleryService: service),
-  );
-  runApp(LizaPhotoApp(viewModel: viewModel));
+  runApp(const LizaPhotoApp());
 }
 
-class LizaPhotoApp extends StatelessWidget {
-  const LizaPhotoApp({required this.viewModel, super.key});
+class LizaPhotoApp extends StatefulWidget {
+  const LizaPhotoApp({super.key});
 
-  final GalleryViewModel viewModel;
+  @override
+  State<LizaPhotoApp> createState() => _LizaPhotoAppState();
+}
+
+class _LizaPhotoAppState extends State<LizaPhotoApp> {
+  final _localeController = AppLocaleController();
+
+  @override
+  void dispose() {
+    _localeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Liza — Photographer',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      home: HomePage(viewModel: viewModel),
+    return AppLocaleScope(
+      controller: _localeController,
+      child: ListenableBuilder(
+        listenable: _localeController,
+        builder: (context, _) => MaterialApp(
+          onGenerateTitle: (context) => context.l10n.siteTitle,
+          debugShowCheckedModeBanner: false,
+          locale: _localeController.locale,
+          supportedLocales: L10n.supportedLocales,
+          localizationsDelegates: L10n.localizationsDelegates,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          home: const GalleryScope(
+            child: HomePage(),
+          ),
+        ),
+      ),
     );
   }
 }

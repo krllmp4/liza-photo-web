@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:liza_photo_web/core/theme/app_theme.dart';
+import 'package:liza_photo_web/src/core/localization/localization_extension.dart';
+import 'package:liza_photo_web/src/core/theme/app_theme.dart';
 import 'package:liza_photo_web/src/features/gallery/domain/model/gallery_photo.dart';
 
 class PhotoViewerPage extends StatefulWidget {
@@ -52,17 +54,22 @@ class _PhotoViewerPageState extends State<PhotoViewerPage> {
               onPageChanged: (index) => setState(() => _index = index),
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.fromLTRB(52, 62, 52, 72),
-                child: Image.network(
-                  widget.photos[index].fullUrl,
+                child: CachedNetworkImage(
+                  imageUrl: widget.photos[index].fullUrl,
                   fit: BoxFit.contain,
-                  loadingBuilder: (context, child, progress) => progress == null
-                      ? child
-                      : const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 1,
-                          ),
-                        ),
+                  fadeInDuration: const Duration(milliseconds: 300),
+                  placeholder: (_, _) => const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 1,
+                    ),
+                  ),
+                  errorWidget: (_, _, _) => const Center(
+                    child: Icon(
+                      Icons.broken_image_outlined,
+                      color: Colors.white54,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -70,7 +77,7 @@ class _PhotoViewerPageState extends State<PhotoViewerPage> {
               top: 10,
               left: 12,
               child: IconButton(
-                tooltip: 'Close',
+                tooltip: context.l10n.close,
                 color: Colors.white,
                 onPressed: () => Navigator.of(context).pop(),
                 icon: const Icon(Icons.close),
@@ -88,7 +95,7 @@ class _PhotoViewerPageState extends State<PhotoViewerPage> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  tooltip: 'Previous',
+                  tooltip: context.l10n.previous,
                   color: Colors.white,
                   onPressed: () => _move(-1),
                   icon: const Icon(Icons.arrow_back),
@@ -98,7 +105,7 @@ class _PhotoViewerPageState extends State<PhotoViewerPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  tooltip: 'Next',
+                  tooltip: context.l10n.next,
                   color: Colors.white,
                   onPressed: () => _move(1),
                   icon: const Icon(Icons.arrow_forward),

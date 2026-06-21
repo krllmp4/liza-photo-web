@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liza_photo_web/src/core/localization/localization_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
@@ -6,11 +7,10 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _InfoPage(
-      eyebrow: 'ABOUT',
-      title: 'I PHOTOGRAPH\nPEOPLE AS THEY ARE.',
-      body:
-          'Меня зовут Лиза. Я снимаю портреты, истории и моменты, в которых важнее всего человек. Работаю в Москве и готова к съёмкам в других городах.',
+    return _InfoPage(
+      eyebrow: context.l10n.about,
+      title: context.l10n.aboutTitle,
+      body: context.l10n.aboutBody,
     );
   }
 }
@@ -20,11 +20,11 @@ class ContactsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _InfoPage(
-      eyebrow: 'CONTACT',
-      title: 'LET’S MAKE\nSOMETHING TOGETHER.',
-      body: 'Напишите, чтобы обсудить съёмку, дату и идею.',
-      links: [
+    return _InfoPage(
+      eyebrow: context.l10n.contact,
+      title: context.l10n.contactTitle,
+      body: context.l10n.contactBody,
+      links: const [
         _ContactLink(
           'EMAIL',
           'hello@lizochekkk-photography.ru',
@@ -69,7 +69,7 @@ class _InfoPage extends StatelessWidget {
                   Text(eyebrow, style: Theme.of(context).textTheme.labelLarge),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('CLOSE'),
+                    child: Text(context.l10n.close),
                   ),
                 ],
               ),

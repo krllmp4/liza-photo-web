@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:liza_photo_web/src/features/gallery/domain/model/gallery_photo.dart';
@@ -18,15 +19,9 @@ class PhotoGrid extends StatelessWidget {
           _ => 3,
         };
         final columns = List.generate(columnCount, (_) => <int>[]);
-        final heights = List.filled(columnCount, 0.0);
 
         for (var index = 0; index < photos.length; index++) {
-          var shortest = 0;
-          for (var column = 1; column < columnCount; column++) {
-            if (heights[column] < heights[shortest]) shortest = column;
-          }
-          columns[shortest].add(index);
-          heights[shortest] += 1 / photos[index].aspectRatio;
+          columns[index % columnCount].add(index);
         }
 
         return Row(
@@ -76,30 +71,30 @@ class _PhotoTileState extends State<_PhotoTile> {
       onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
         onTap: widget.onTap,
-        child: AspectRatio(
-          aspectRatio: widget.photo.aspectRatio,
-          child: ClipRect(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                AnimatedScale(
-                  scale: _hovered ? 1.018 : 1,
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeOut,
-                  child: Image.network(
-                    widget.photo.thumbnailUrl,
-                    fit: BoxFit.cover,
-                    frameBuilder: (context, child, frame, _) => AnimatedOpacity(
-                      opacity: frame == null ? 0 : 1,
-                      duration: const Duration(milliseconds: 450),
-                      child: child,
-                    ),
-                    loadingBuilder: (context, child, progress) =>
-                        progress == null ? child : const _PhotoPlaceholder(),
-                    errorBuilder: (_, _, _) => const _PhotoPlaceholder(),
+        child: ClipRect(
+          child: Stack(
+            children: [
+              AnimatedScale(
+                scale: _hovered ? 1.018 : 1,
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeOut,
+                child: CachedNetworkImage(
+                  imageUrl: widget.photo.thumbnailUrl,
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                  fadeInDuration: const Duration(milliseconds: 450),
+                  placeholder: (_, _) => const AspectRatio(
+                    aspectRatio: 3 / 4,
+                    child: _PhotoPlaceholder(),
+                  ),
+                  errorWidget: (_, _, _) => const AspectRatio(
+                    aspectRatio: 3 / 4,
+                    child: _PhotoPlaceholder(),
                   ),
                 ),
-                AnimatedOpacity(
+              ),
+              Positioned.fill(
+                child: AnimatedOpacity(
                   opacity: _hovered && widget.photo.title.isNotEmpty ? 1 : 0,
                   duration: const Duration(milliseconds: 180),
                   child: ColoredBox(
@@ -118,8 +113,8 @@ class _PhotoTileState extends State<_PhotoTile> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -151,7 +146,9 @@ class _PhotoPlaceholderState extends State<_PhotoPlaceholder>
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: Tween(begin: 0.45, end: 0.9).animate(_controller),
-      child: const ColoredBox(color: Color(0xFFD8D8D4)),
+      child: ColoredBox(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
     );
   }
 }

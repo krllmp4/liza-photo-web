@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "siteTitle": "Liza — Photographer",
+  "portfolio": "PORTFOLIO",
+  "about": "ABOUT",
+  "contact": "CONTACT",
+  "heroTitle": "PORTRAITS, STORIES\n& QUIET MOMENTS",
+  "retryLoadingPhotos": "RETRY LOADING PHOTOS",
+  "city": "MOSCOW",
+  "aboutTitle": "I PHOTOGRAPH\nPEOPLE AS THEY ARE.",
+  "aboutBody": "My name is Liza. I photograph portraits, stories, and moments where the person matters most. I am based in Moscow and available for projects in other cities.",
+  "contactTitle": "LET’S MAKE\nSOMETHING TOGETHER.",
+  "contactBody": "Get in touch to discuss your shoot, date, and idea.",
+  "close": "CLOSE",
+  "previous": "Previous photo",
+  "next": "Next photo",
+  "switchToEnglish": "Switch to English",
+  "switchToRussian": "Switch to Russian"
+}

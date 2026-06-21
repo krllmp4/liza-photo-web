@@ -6,8 +6,9 @@ import 'package:liza_photo_web/src/features/gallery/domain/repository/i_gallery_
 enum GalleryStatus { initial, loading, ready, error }
 
 final class GalleryViewModel extends ChangeNotifier {
-  GalleryViewModel({required IGalleryRepository repository})
-    : _repository = repository;
+  GalleryViewModel({
+    required IGalleryRepository repository,
+  }) : _repository = repository;
 
   final IGalleryRepository _repository;
 
