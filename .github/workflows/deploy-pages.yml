@@ -28,7 +28,7 @@ jobs:
       - run: flutter pub get
       - run: >-
           flutter build web --release
-          --base-href /
+          --base-href /liza-photo-web/
           --dart-define=GALLERY_MANIFEST_URL=${{ vars.GALLERY_MANIFEST_URL }}
 
       - uses: actions/configure-pages@v5
