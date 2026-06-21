@@ -16,6 +16,7 @@ final class GalleryService {
         'v': DateTime.now().millisecondsSinceEpoch,
       },
     );
+
     final data = response.data;
     if (data == null) {
       throw const FormatException('Gallery manifest must be a JSON object');

@@ -34,7 +34,7 @@ class L10nEn extends L10n {
 
   @override
   String get aboutBody =>
-      'My name is Liza. I photograph portraits, stories, and moments where the person matters most. I am based in Moscow and available for projects in other cities.';
+      'My name is Liza. I photograph portraits, stories, and moments where the person matters most. I am based in Saint-Petersburg and available for projects in other cities.';
 
   @override
   String get contactTitle => 'LET’S MAKE\nSOMETHING TOGETHER.';

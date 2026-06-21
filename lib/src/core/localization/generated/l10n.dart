@@ -148,7 +148,7 @@ abstract class L10n {
   /// No description provided for @aboutBody.
   ///
   /// In en, this message translates to:
-  /// **'My name is Liza. I photograph portraits, stories, and moments where the person matters most. I am based in Moscow and available for projects in other cities.'**
+  /// **'My name is Liza. I photograph portraits, stories, and moments where the person matters most. I am based in Saint-Petersburg and available for projects in other cities.'**
   String get aboutBody;
 
   /// No description provided for @contactTitle.

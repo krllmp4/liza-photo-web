@@ -4,19 +4,28 @@
         {
             "name": "liza-photo-web",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define=GALLERY_MANIFEST_URL=https://mxwmzhkzyoyzldegryew.supabase.co/storage/v1/object/public/portfolio/manifest.json"
+            ]
         },
         {
             "name": "liza-photo-web (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "toolArgs": [
+                "--dart-define=GALLERY_MANIFEST_URL=https://mxwmzhkzyoyzldegryew.supabase.co/storage/v1/object/public/portfolio/manifest.json"
+            ]
         },
         {
             "name": "liza-photo-web (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "toolArgs": [
+                "--dart-define=GALLERY_MANIFEST_URL=https://mxwmzhkzyoyzldegryew.supabase.co/storage/v1/object/public/portfolio/manifest.json"
+            ]
         }
     ]
 }

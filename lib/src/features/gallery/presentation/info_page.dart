@@ -26,15 +26,19 @@ class ContactsPage extends StatelessWidget {
       body: context.l10n.contactBody,
       links: const [
         _ContactLink(
-          'EMAIL',
-          'hello@lizochekkk-photography.ru',
-          'mailto:hello@lizochekkk-photography.ru',
+          'E-mail:',
+          'antonova.liza05@mail.ru',
+          'mailto:antonova.liza05@mail.ru',
         ),
-        _ContactLink('TELEGRAM', '@lizochekkk', 'https://t.me/lizochekkk'),
         _ContactLink(
-          'INSTAGRAM',
-          '@lizochekkk',
-          'https://instagram.com/lizochekkk',
+          'Telegram:',
+          '@shblnskaya',
+          'https://t.me/shblnskaya',
+        ),
+        _ContactLink(
+          'Instagram:',
+          '@lizochekkk__',
+          'https://instagram.com/lizochekkk__',
         ),
       ],
     );
@@ -83,7 +87,7 @@ class _InfoPage extends StatelessWidget {
               const SizedBox(height: 38),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 620),
-                child: SelectableText(
+                child: Text(
                   body,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
