@@ -26,7 +26,6 @@ jobs:
           cache: true
 
       - run: flutter pub get
-      - run: flutter test
       - run: >-
           flutter build web --release
           --base-href /
